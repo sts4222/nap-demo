@@ -1,0 +1,82 @@
+version: '3.3'
+
+services:
+    db1:
+        image: mysql:latest
+        container_name: db1
+        volumes:
+          - ./migrate/wp_db1:/var/lib/mysql:rw
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root-password
+            MYSQL_DATABASE: wp_db
+            MYSQL_USER: wp-user
+            MYSQL_PASSWORD: wp-password
+
+    db2:
+        image: mysql:latest
+        container_name: db2
+        volumes:
+          - ./migrate/wp_db2:/var/lib/mysql:rw
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root-password
+            MYSQL_DATABASE: wp_db
+            MYSQL_USER: wp-user
+            MYSQL_PASSWORD: wp-password
+
+    wp1:
+        image: wordpress:latest
+        container_name: wp1
+        depends_on:
+            - db1
+        expose:
+            - '80'
+        restart: always
+        environment:
+            WORDPRESS_DB_HOST: db1
+            WORDPRESS_DB_USER: wp-user
+            WORDPRESS_DB_PASSWORD: wp-password
+            WORDPRESS_DB_NAME: wp_db
+        volumes:
+#            - ./migrate/plugins:/var/www/html/wp-content/plugins
+#            - ./migrate/themes:/var/www/html/wp-content/themes
+#            - ./migrate/uploads:/var/www/html/wp-content/uploads
+            - ./migrate/wp1:/var/www/html:rw
+
+    wp2:
+        image: wordpress:latest
+        container_name: wp2
+        depends_on:
+            - db2
+        expose:
+            - '80'
+        restart: always
+        environment:
+            WORDPRESS_DB_HOST: db2
+            WORDPRESS_DB_USER: wp-user
+            WORDPRESS_DB_PASSWORD: wp-password
+            WORDPRESS_DB_NAME: wp_db
+        volumes:
+#            - ./migrate/plugins:/var/www/html/wp-content/plugins
+#            - ./migrate/themes:/var/www/html/wp-content/themes
+#            - ./migrate/uploads:/var/www/html/wp-content/uploads
+            - ./migrate/wp2:/var/www/html:rw
+
+    nginx:
+        image: app-protect:latest
+        container_name: nginxplus
+        depends_on:
+            - wp1
+            - wp2
+        ports:
+            - '80:80'
+            - '443:443'
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/wordpress.conf:/etc/nginx/conf.d/wordpress.conf
+            - ./waf_pol/:/home/
+            - ./logs/nginx:/var/log/nginx
+#            - ./logs/app_protect/:/var/log/app_protect/
+            - ./migrate/ssl:/etc/nginx/ssl
+        restart: always
