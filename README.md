@@ -10,6 +10,10 @@ NGINX steers traffic to the backend containers based on host name and restricts 
 
 For updates or rollbacks between Dev and Prod Ansible playbooks can be run.
 
+NGINX App Protect is used to secure the application. For reference on administering NAP check the official NGINX docs:
+
+https://docs.nginx.com/nginx-app-protect/configuration/
+
 ------------------------------------
 
 Preparations:
