@@ -135,7 +135,9 @@ https://nickjanetakis.com/blog/docker-tip-74-curl-vs-pip-for-installing-docker-c
 "If you use any of Ansible’s docker_* modules, they depend on having the docker and / or docker-compose PIP packages installed..."
 
 >> apt-get install python-pip
+
 >> pip install --upgrade pip
+
 >> pip install docker-compose
 
 ------------
@@ -166,7 +168,11 @@ sudo chmod -R 777 logs/app_protect/
 Issue - elasticsearch
 max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
 The following added to the docker-compose file:
+
     ulimits:
+
       nofile:
+
          soft: 65536
+
          hard: 65536
