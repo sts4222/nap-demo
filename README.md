@@ -49,8 +49,10 @@ In browser open: https://dev.myapp1.de and follow the Wordpress installation ste
 In browser open: https://myapp1.de to demonstrate that setup has been done only in Dev environment. You should receive "no access for you!" message in your browser.
 
 Now let's run ansible playbook to copy Dev to Prod.
+
 Under ansible --> inventory -->host make sure you have the right IP and username set:
-- docker-node-ip ansible_user=username 
+
+docker-node-ip ansible_user=username 
 
 You can run ansible command or use the script:
 
