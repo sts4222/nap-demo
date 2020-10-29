@@ -144,9 +144,10 @@ Issue - leverage user to sudo when running a playbook
 "msg": "Destination nap-demo/nginx_wp/migrate/wp1 not writable"}
 use switch -K to run ansible playbook as root
 
->> ansible-playbook playbooks/update-myapp1-homepage.yaml -i inventory/hosts --key-file /Users/foitzik-schermann/.ssh/id_rsa -K
+>> ansible-playbook playbooks/update-myapp1-homepage.yaml -i inventory/hosts --key-file /path-to-my-keys/.ssh/id_rsa -K
 
 in playbook add
+
 become: yes
 
 -------------
