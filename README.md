@@ -6,7 +6,7 @@ wp1 = myapp1.de       #Prod
 
 wp2 = dev.myapp1.de   #Dev
 
-NGINX stears traffic to the backend containers based on host name and restricts access to some administrative paths for the Prod environment.
+NGINX steers traffic to the backend containers based on host name and restricts access to some administrative paths for the Prod environment.
 
 For updates or rollbacks between Dev and Prod Ansible playbooks can be run.
 
