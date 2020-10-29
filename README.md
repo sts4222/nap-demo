@@ -157,7 +157,8 @@ Issue - lack of permissions to connect docker volume
 bash: /var/log/app_protect/bd-socket-plugin.log: Permission denied
 nginx: [error] APP_PROTECT { "event": "configuration_error", "error_message": "failed to open /var/log/app_protect/security.log (Permission denied)", "line_number": 22}
 
-I make it works creating ./logs/app_protect with 777 permission in advance.
+I made it works creating ./logs/app_protect with 777 permission in advance.
+
 sudo chmod -R 777 logs/app_protect/
 
 -------------
