@@ -54,7 +54,7 @@ Under ansible --> inventory -->host make sure you have the right IP and username
 
 docker-node-ip ansible_user=username 
 
-You can run ansible command or use the script:
+You can run the ansible command from the script below after you updated "path-to-my-keys" in this script:
 
 >> update_myapp1.sh
 
@@ -79,22 +79,35 @@ https://github.com/MattDierick/f5-waf-elk-dashboards
 >> docker-compose up -d
 
 It takes a while for ELK stack to get ready. You can verify the start process with:
+
 >> docker logs f5-waf-elk-dashboards_elasticsearch_1
 
 Also check for issues if something goes wrong. In my case I needed to adjust virtual memory and modify docker-compose (already done):
+
 max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+
 max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
+
 >> sudo nano /etc/sysctl.conf
+
    vm.max_map_count=262144
+   
 >> sudo sysctl -p
+
 >> docker-compose down
+
 >> docker-compose up -d
 
 Adjust app_protect_security_log in nginx.conf to point to ELK stack
+
 >> cd ..
+
 >> nano nginx.conf 
+
    app_protect_security_log "/home/log_all.json" syslog:server=xx.xx.xx.xx:5144;  #where x = docker node's IP
+
 >> docker-compose down
+
 >> docker-compose up -d
 
 In browser open: http://docker-node-ip:5601
@@ -104,8 +117,10 @@ Kibana GUI should load. Select Dashboards in Menue and import both *.ndjson file
 - overview-dashboard.ndjson
 
 In browser open: https://myapp1.de and browse through the app to generate some traffic.
+
 In browser open: https://myapp1.de/?p=<script> 
 and refresh screen view times to generate some blocking events.
+
 Switch bach to Kibana --> Overview --> Dashboards to see the events.
 
 Congratulates!!! - You are done with the Demo
