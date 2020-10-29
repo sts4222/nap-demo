@@ -51,6 +51,7 @@ In browser open: https://myapp1.de to demonstrate that setup has been done only 
 Now let's run ansible playbook to copy Dev to Prod.
 Under ansible --> inventory -->host make sure you have the right IP and username set:
 - docker-node-ip ansible_user=username 
+
 You can run ansible command or use the script:
 
 >> update_myapp1.sh
@@ -58,15 +59,21 @@ You can run ansible command or use the script:
 In browser open: https://myapp1.de to demonstrate that myapp1 has been initially updated.
 
 Now let's verify that WAF policy is up and in blocking mode. You can find the configuration of the policy in waf_pol/wp_01.json
+
 In browser open: https://myapp1.de/?p=<script>
+
 You should see the ASM blocking page.
 
 Finally we want add some visibility. For this we add Kibana dashboard based on this repo but updated to the last release:
+
 https://github.com/MattDierick/f5-waf-elk-dashboards
 
 >> cd f5-waf-elk-dashboards
+
 >> nano logstash/conf.d/30-waf-logs-full-logstash.conf
+
    hosts => ['localhost:9200']
+   
 >> docker-compose up -d
 
 It takes a while for ELK stack to get ready. You can verify the start process with:
