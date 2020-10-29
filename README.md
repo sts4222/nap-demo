@@ -1,8 +1,11 @@
 # nap-demo
 
 This docker-compose builds an NGINX instance in front of two Wordpress containers.
+
 wp1 = myapp1.de       #Prod
+
 wp2 = dev.myapp1.de   #Dev
+
 NGINX stears traffic to the backend containers based on host name and restricts access to some administrative paths for the Prod environment.
 
 For updates or rollbacks between Dev and Prod Ansible playbooks can be run.
@@ -12,17 +15,19 @@ For updates or rollbacks between Dev and Prod Ansible playbooks can be run.
 Preparations:
 
 1. Adjust your dns (e.g. hosts file) to access:
-myapp1.de
-dev.myapp1.de
+- myapp1.de
+- dev.myapp1.de
 
 2. Enable public key authentication for ssh to run Ansible playbooks
 
 >> ssh-keygen
+
 >> ssh-copy-id -i ~/.ssh/mykey user@host
 
 3. Allow docker commands to run without sudo
 
 >> sudo groupadd docker
+
 >> sudo usermod -aG docker $USER
 
 Log out and log back in so that your group membership is re-evaluated. If testing on a virtual machine, it may be necessary to restart the virtual machine for changes to take effect.
@@ -32,8 +37,11 @@ Log out and log back in so that your group membership is re-evaluated. If testin
 Demo script:
 
 >> git clone https://github.com/dfs5/nap-demo.git
+
 >> cd nap-demo
+
 >> docker-compose up -d
+
 >> docker ps
 
 In browser open: https://dev.myapp1.de and follow the Wordpress installation steps.
@@ -42,8 +50,9 @@ In browser open: https://myapp1.de to demonstrate that setup has been done only 
 
 Now let's run ansible playbook to copy Dev to Prod.
 Under ansible --> inventory -->host make sure you have the right IP and username set:
-   docker-node-ip ansible_user=username 
+- docker-node-ip ansible_user=username 
 You can run ansible command or use the script:
+
 >> update_myapp1.sh
 
 In browser open: https://myapp1.de to demonstrate that myapp1 has been initially updated.
