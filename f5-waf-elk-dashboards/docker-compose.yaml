@@ -1,0 +1,18 @@
+version: "2.4"
+services:
+  elasticsearch:
+    image: sebp/elk:latest
+    restart: always
+    volumes:
+      - ./logstash/conf.d:/etc/logstash/conf.d:ro
+      - ./elk:/var/lib/elasticsearch
+    ports:
+    - "9200:9200"
+    - "5601:5601"
+    - "5144:5144"
+    ulimits:
+      nofile:
+         soft: 65536
+         hard: 65536
+#volumes:
+#  elk:
