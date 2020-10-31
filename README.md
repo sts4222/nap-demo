@@ -12,25 +12,26 @@ https://github.com/dfs5/build-nap-container
 
 # Demo Envirnonment
 
-wp1 = myapp1.de       #Prod
+Ubuntu Server 18.04 VM running following docker containers:
 
-wp2 = dev.myapp1.de   #Dev
+- wordpress1 + mysql1 for publishing myapp1.de in Prod environment
+- wordpress2 + mysql2 for publishing de.myapp1.de in Dev environment
 
 NGINX steers traffic to the backend containers based on host name and restricts access to some administrative paths for the Prod environment.
 
-For updates or rollbacks between Dev and Prod Ansible playbooks can be run.
-
-NGINX App Protect (NAP) is used to secure the application. For reference on administering NAP check the official NGINX docs:
+NGINX App Protect (NAP) module in NNGINX is used to secure the application. For reference on administering NAP check the official NGINX docs:
 
 https://docs.nginx.com/nginx-app-protect/configuration/
 
 ELK Stack to visualise WAF events.
 
+Optional - For updates or rollbacks between Dev and Prod Ansible playbooks can be run.
+
 ------------------------------------
 
 # Preparations
 
-1. Adjust your dns (e.g. hosts file) to access:
+1. Adjust your dns (e.g. hosts file) to access both apps via your VM's IP:
 - myapp1.de
 - dev.myapp1.de
 
