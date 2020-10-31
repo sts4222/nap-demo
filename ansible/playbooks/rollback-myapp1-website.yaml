@@ -1,0 +1,65 @@
+- name: Update myapp1 Homepage
+  hosts: nap
+  gather_facts: no
+  tasks:
+    - name: Stop all services
+      docker_compose:
+        files: docker-compose.yml
+        project_src: nap-demo
+        build: no
+        stopped: yes
+      register: output
+
+    - debug:
+        var: output
+
+    - assert:
+        that: 
+          - "not db1.db1.state.running"
+          - "not db2.db2.state.running"
+          - "not wp1.wp1.state.running"
+          - "not wp2.wp2.state.running"
+          - "not nginx.nginxplus.state.running"
+        success_msg: "Containers stopped."
+        fail_msg: "Some containers may still be running."
+
+    - name: Copy webpage pro to dev
+      become: yes
+      copy:
+        src: nap-demo/migrate/wp1/
+        dest: nap-demo/migrate/wp2
+#        owner: www-data
+#        group: www-data
+#        mode: '0644' 
+        remote_src: yes
+
+    - name: Copy db prod to dev
+      become: yes
+      copy:
+        src: nap-demo/migrate/wp_db1/
+        dest: nap-demo/migrate/wp_db2
+#        owner: nginx
+#        group: docker
+#        mode: '0644' 
+        remote_src: yes
+
+    - name: Run `docker-compose up` again
+      docker_compose:
+#        files: docker-compose.yml
+        project_src: nap-demo
+        build: no
+      register: output
+
+    - debug:
+        var: output
+
+    - assert:
+        that: 
+          - "db1.db1.state.running"
+          - "db2.db2.state.running"
+          - "wp1.wp1.state.running"
+          - "wp2.wp2.state.running"
+          - "nginx.nginxplus.state.running"
+        success_msg: "Containers have been started."
+        fail_msg: "Containers already running."
+
