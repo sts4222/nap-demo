@@ -10,6 +10,8 @@ https://github.com/dfs5/build-nap-container
 
 --------------------------------------
 
+# Demo Envirnonment
+
 wp1 = myapp1.de       #Prod
 
 wp2 = dev.myapp1.de   #Dev
@@ -18,13 +20,15 @@ NGINX steers traffic to the backend containers based on host name and restricts 
 
 For updates or rollbacks between Dev and Prod Ansible playbooks can be run.
 
-NGINX App Protect is used to secure the application. For reference on administering NAP check the official NGINX docs:
+NGINX App Protect (NAP) is used to secure the application. For reference on administering NAP check the official NGINX docs:
 
 https://docs.nginx.com/nginx-app-protect/configuration/
 
+ELK Stack to visualise WAF events.
+
 ------------------------------------
 
-Preparations:
+# Preparations
 
 1. Adjust your dns (e.g. hosts file) to access:
 - myapp1.de
@@ -64,7 +68,7 @@ $ sudo sysctl -p
 
 ------------------------------------
 
-Demo script:
+# Demo script
 
 $ git clone https://github.com/dfs5/nap-demo.git
 
@@ -141,7 +145,7 @@ Congratulates!!! - You are done with the Demo
 
 ------------------------------------
 
-Possible Issues:
+# Possible Issues
 
 Issue - Ansible playbooks don't run
 "msg": "Unable to load docker-compose. Try `pip install docker-compose`.
