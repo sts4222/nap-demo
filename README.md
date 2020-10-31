@@ -1,6 +1,6 @@
 # nap-demo
 
-This docker-compose builds an NGINX instance in front of two Wordpress containers.The NGINX+ image used has been created based on a trial license. To get a free trial apply under: 
+This docker-compose builds an NGINX instance in front of two Wordpress containers. The NGINX+ image used has been created based on a trial license. To get a free trial apply under: 
 
 https://www.nginx.com/free-trial-request
 
